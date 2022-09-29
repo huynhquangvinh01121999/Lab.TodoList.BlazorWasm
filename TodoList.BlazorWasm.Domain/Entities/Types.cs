@@ -11,6 +11,6 @@ namespace TodoList.BlazorWasm.Domain.Entities
         [Column(TypeName = "nvarchar(100)")]
         public string Name { get; set; }
 
-        public IList<Todos> Todos { get; set; }
+        public IList<TodosList> Todos { get; set; }
     }
 }

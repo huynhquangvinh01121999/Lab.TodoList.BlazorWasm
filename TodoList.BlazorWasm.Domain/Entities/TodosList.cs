@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TodoList.BlazorWasm.Domain.Entities
 {
-    public class Todos : AuditBaseEntity
+    public class TodosList : AuditBaseEntity
     {
         [Required]
         [MaxLength(200)]

@@ -16,6 +16,6 @@ namespace TodoList.BlazorWasm.Domain.Entities
         [Column(TypeName = "datetime")]
         public DateTime Dob { get; set; }
 
-        public IList<Todos> Todos { get; set; }
+        public IList<TodosList> Todos { get; set; }
     }
 }

@@ -27,15 +27,15 @@ namespace TodoList.BlazorWasm.Persistence.Contexts
 
             builder.HasDefaultSchema(defaultSchema);
 
-            builder.Entity<Todos>().HasKey(x => x.Id);
+            builder.Entity<TodosList>().HasKey(x => x.Id);
             builder.Entity<Types>().HasKey(x => x.Id);
 
-            builder.Entity<Todos>().HasOne<Types>(x => x.Types).WithMany(x => x.Todos).HasForeignKey(x => x.TypeId);
-            builder.Entity<Todos>().HasOne<AppUsers>(x => x.Users).WithMany(x => x.Todos).HasForeignKey(x => x.UserId);
+            builder.Entity<TodosList>().HasOne<Types>(x => x.Types).WithMany(x => x.Todos).HasForeignKey(x => x.TypeId);
+            builder.Entity<TodosList>().HasOne<AppUsers>(x => x.Users).WithMany(x => x.Todos).HasForeignKey(x => x.UserId);
 
             base.OnModelCreating(builder);
         }
-        public DbSet<Todos> TodoLists { get; set; }
+        public DbSet<TodosList> TodoLists { get; set; }
         public DbSet<Types> Types { get; set; }
     }
 }
