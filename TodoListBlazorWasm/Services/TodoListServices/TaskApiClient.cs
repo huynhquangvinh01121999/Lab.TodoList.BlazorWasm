@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading.Tasks;
+using TodoListBlazorWasm.Models;
 
 namespace TodoListBlazorWasm.Services.TodoListServices
 {
@@ -12,6 +14,17 @@ namespace TodoListBlazorWasm.Services.TodoListServices
         public TaskApiClient(HttpClient httpClient)
         {
             _httpClient = httpClient;
+        }
+
+        public async Task<TaskViewModel> CreateNewTaskAsync(CreateNewTaskRequest request)
+        {
+            var response = await _httpClient.PostAsJsonAsync("/api/Todos", request);
+
+            var returnValue = await response.Content.ReadAsStringAsync();
+
+            var taskViewModel = JsonSerializer.Deserialize<TaskViewModel>(returnValue, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            
+            return taskViewModel;
         }
 
         public async Task<TaskViewModel> GetTodoByIdAsync(int id) 

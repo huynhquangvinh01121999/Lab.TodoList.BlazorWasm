@@ -10,5 +10,6 @@ namespace TodoList.BlazorWasm.Application.Features.Todos.Queries.GetTodosByUserI
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string Mode { get; set; }
+        public Guid UserId { get; set; }
     }
 }

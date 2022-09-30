@@ -1,39 +1,48 @@
 ﻿@page "/todolist/{TodoListId}"
-@using TodoListBlazorWasm.Services.TodoListServices;
+@*@using TodoListBlazorWasm.Services.TodoListServices;
 
-@inject ITaskApiClient TaskApiClient
+@inject ITaskApiClient _taskApiClient*@
 
 <h3>TodoListDetail: @TodoListId</h3>
-<table>
-    <tr>
-        <td>ID:</td>
-        <td>@TaskVM.Id</td>
-    </tr>
-    <tr>
-        <td>Title:</td>
-        <td>@TaskVM.Title</td>
-    </tr>
-    <tr>
-        <td>Content:</td>
-        <td>@TaskVM.Content</td>
-    </tr>
-    <tr>
-        <td>Start Date:</td>
-        <td>@TaskVM.StartDate</td>
-    </tr>
-    <tr>
-        <td>End Date:</td>
-        <td>@TaskVM.EndDate</td>
-    </tr>
 
-</table>
+@if (TaskVM == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table>
+        <tr>
+            <td>ID:</td>
+            <td>@TaskVM.Id</td>
+        </tr>
+        <tr>
+            <td>Title:</td>
+            <td>@TaskVM.Title</td>
+        </tr>
+        <tr>
+            <td>Content:</td>
+            <td>@TaskVM.Content</td>
+        </tr>
+        <tr>
+            <td>Start Date:</td>
+            <td>@TaskVM.StartDate</td>
+        </tr>
+        <tr>
+            <td>End Date:</td>
+            <td>@TaskVM.EndDate</td>
+        </tr>
+    </table>
+}
 
-@code{ 
-    public TaskViewModel TaskVM { get; set; }
+@*@code{
+    [Parameter]
+    public string TodoListId { get; set; }
+
+    private TaskViewModel TaskVM { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        TaskVM = await TaskApiClient.GetTodoByIdAsync(int.Parse(TodoListId));
+        TaskVM = await _taskApiClient.GetTodoByIdAsync(int.Parse(TodoListId));
     }
-}
-
+}*@

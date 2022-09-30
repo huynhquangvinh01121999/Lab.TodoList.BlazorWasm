@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using TodoListBlazorWasm.Models;
 
 namespace TodoListBlazorWasm.Services.TodoListServices
 {
@@ -7,5 +8,6 @@ namespace TodoListBlazorWasm.Services.TodoListServices
     {
         Task<IReadOnlyList<TaskViewModel>> GetTodosAsync();
         Task<TaskViewModel> GetTodoByIdAsync(int id);
+        Task<TaskViewModel> CreateNewTaskAsync(CreateNewTaskRequest request);
     }
 }

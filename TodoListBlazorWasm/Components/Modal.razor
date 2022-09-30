@@ -1,59 +1,76 @@
 ﻿
-<div class="modal @ModalClass" tabindex="-1" role="dialog" style="display:@ModalDisplay">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-center">Add New Todo</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="() => Close()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label class="col-form-label">Title:</label>
-                        <input type="text" class="form-control" id="title">
-                    </div>
-                    <div class="form-group">
-                        <label class="col-form-label">Content:</label>
-                        <textarea class="form-control" id="content"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-form-label">Start Date:</label>
-                        <input type="datetime" class="form-control" id="startdate">
-                    </div>
-                    <div class="form-group">
-                        <label class="col-form-label">End Date:</label>
-                        <input type="datetime" class="form-control" id="enddate">
-                    </div>
-                    <div class="form-group">
-                        <label class="col-form-label">End Date:</label>
-                        <select class="form-control" id="mode">
-                            <option value="private">Private</option>
-                            <option value="public">Public</option>
-                        </select>
-                    </div>
-                    @if (Types != null)
-                    {
+@using TodoListBlazorWasm.Components;
+
+@if (Types == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="modal @ModalClass" tabindex="-1" role="dialog" style="display:@ModalDisplay">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center">Add New Todo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="() => Close()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <EditForm Model="@requestModel" OnValidSubmit="CreateNewTask">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+                        <div class="form-group">
+                            <label class="col-form-label">Title:</label>
+                            <InputText class="form-control" @bind-Value="@requestModel.Title"></InputText>
+                            <ValidationMessage For="() => requestModel.Title"></ValidationMessage>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">Content:</label>
+                            <InputText class="form-control" @bind-Value="@requestModel.Content"></InputText>
+                            <ValidationMessage For="() => requestModel.Content"></ValidationMessage>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">Start Date:</label>
+                            <InputDate class="form-control" @bind-Value="@requestModel.StartDate"></InputDate>
+                            <ValidationMessage For="() => requestModel.StartDate"></ValidationMessage>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">End Date:</label>
+                            <InputDate class="form-control" @bind-Value="@requestModel.EndDate"></InputDate>
+                            <ValidationMessage For="() => requestModel.EndDate"></ValidationMessage>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">End Date:</label>
+                            <InputSelect class="form-control" @bind-Value="@requestModel.Mode">
+                                <option value="public">Public</option>
+                                <option value="private">Private</option>
+                            </InputSelect>
+                            <ValidationMessage For="() => requestModel.Mode"></ValidationMessage>
+                            <small class="form-text text-muted">Choose a Mode which you want.</small>
+                        </div>
                         <div class="form-group">
                             <label class="col-form-label">Type:</label>
-                            <select class="form-control" id="mode">
+                            <CustomInputSelect class="form-control" @bind-Value="@requestModel.TypeId">
                                 @foreach (var item in Types)
-                                {
-                                    <option value="@item.Id">@item.Name</option>
-                                }
-                            </select>
+                                    {
+                                    <option value="@item.Id">@item.Id - @item.Name</option>
+                                    }
+                            </CustomInputSelect>
+                            <ValidationMessage For="() => requestModel.TypeId"></ValidationMessage>
+                            <small class="form-text text-muted">Choose a Type which you want.</small>
                         </div>
-                    }
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Close()">Close</button>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Close()">Close</button>
+                        </div>
+                    </EditForm>
+                </div>
             </div>
         </div>
     </div>
-</div>
+}
+
 
 @if (ShowBackdrop)
 {

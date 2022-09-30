@@ -40,7 +40,7 @@ namespace TodoList.BlazorWasm.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTodos(CreateTodosCommand request)
+        public async Task<IActionResult> CreateTodos([FromBody] CreateTodosCommand request)
         {
             return Ok(await _mediator.Send(request));
         }

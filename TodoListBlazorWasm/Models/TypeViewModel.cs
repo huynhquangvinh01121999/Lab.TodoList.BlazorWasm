@@ -1,4 +1,6 @@
-﻿namespace TodoListBlazorWasm.Services.TypesServices
+﻿using System;
+
+namespace TodoListBlazorWasm.Models
 {
     public class TypeViewModel
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TodoListBlazorWasm.Services.TodoListServices
+namespace TodoListBlazorWasm.Models
 {
     public class TaskViewModel
     {
