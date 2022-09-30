@@ -1,0 +1,84 @@
+﻿
+<div class="modal @ModalClass" tabindex="-1" role="dialog" style="display:@ModalDisplay">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center">Add New Todo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="() => Close()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label class="col-form-label">Title:</label>
+                        <input type="text" class="form-control" id="title">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Content:</label>
+                        <textarea class="form-control" id="content"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Start Date:</label>
+                        <input type="datetime" class="form-control" id="startdate">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">End Date:</label>
+                        <input type="datetime" class="form-control" id="enddate">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">End Date:</label>
+                        <select class="form-control" id="mode">
+                            <option value="private">Private</option>
+                            <option value="public">Public</option>
+                        </select>
+                    </div>
+                    @if (Types != null)
+                    {
+                        <div class="form-group">
+                            <label class="col-form-label">Type:</label>
+                            <select class="form-control" id="mode">
+                                @foreach (var item in Types)
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            </select>
+                        </div>
+                    }
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Close()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (ShowBackdrop)
+{
+    <div class="modal-backdrop fade show"></div>
+}
+
+@code {
+
+    public string ModalDisplay = "none;";
+    public string ModalClass = "";
+    public bool ShowBackdrop = false;
+
+    public void Open()
+    {
+        ModalDisplay = "block;";
+        ModalClass = "Show";
+        ShowBackdrop = true;
+        StateHasChanged();
+    }
+
+    public void Close()
+    {
+        ModalDisplay = "none";
+        ModalClass = "";
+        ShowBackdrop = false;
+        StateHasChanged();
+    }
+}

@@ -70,16 +70,7 @@ namespace TodoList.BlazorWasm.API
                 });
             });
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy", policy =>
-                {
-                    policy.AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .WithOrigins("http://localhost:3000")
-                        .AllowCredentials();
-                });
-            });
+            services.AddCors();
 
             services.AddAuthentication(options =>
             {
@@ -135,6 +126,7 @@ namespace TodoList.BlazorWasm.API
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddTransient<ITodosRepository, TodosRepository>();
             services.AddTransient<IUsersRepository, UsersRepository>();
+            services.AddTransient<ITypesRepository, TypesRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -154,7 +146,13 @@ namespace TodoList.BlazorWasm.API
 
             app.UseRouting();
 
-            app.UseCors("CorsPolicy");
+            app.UseCors(builder =>
+            {
+                builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            });
 
             app.UseAuthentication();
 

@@ -1,7 +1,47 @@
 ﻿@page "/todolist"
+@using TodoListBlazorWasm.Components
 
-<h3>@title</h3>
+@if (Todos == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <Modal @ref="Modal"></Modal>
+    <button class="btn btn-outline-primary float-right mb-3" @onclick="() => Modal.Open()">
+        <span class="oi oi-plus" aria-hidden="true"></span> Add Todo
+    </button>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Mode</th>
+                <th>User Id</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Todos)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Title</td>
+                    <td>@item.Content</td>
+                    <td>@item.StartDate</td>
+                    <td>@item.EndDate</td>
+                    <td>@item.Mode</td>
+                    <td>@item.UserId</td>
+                    <td><a href="/todolist/@item.Id">Detail</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
 @code {
-    string title = "This is a page todo list";
+    private TodoListBlazorWasm.Components.Modal Modal { get; set; }
 }

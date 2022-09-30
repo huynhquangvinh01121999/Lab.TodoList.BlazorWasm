@@ -12,22 +12,28 @@ namespace TodoList.BlazorWasm.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TodosApiController : ControllerBase
+    public class TodosController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public TodosApiController(IMediator mediator)
+        public TodosController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
-        [HttpGet("GetTodos")]
+        [HttpGet]
         public async Task<IActionResult> GetTodos()
         {
             return Ok(await _mediator.Send(new GetTodosQuery()));
         }
 
-        [HttpGet("GetTodosByUserId")]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetTodosById(int id)
+        {
+            return Ok(await _mediator.Send(new GetTodoByIdQuery { Id = id }));
+        }
+
+        [HttpGet("GetByUserId")]
         public async Task<IActionResult> GetTodosByUserId(Guid userId)
         {
             return Ok(await _mediator.Send(new GetTodosByUserIdQuery { UserId = userId }));
