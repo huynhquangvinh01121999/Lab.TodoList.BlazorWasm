@@ -8,11 +8,11 @@ namespace TodoList.BlazorWasm.Domain.Interfaces
 {
     public interface ITodosRepository : IRepository<Entities.TodosList>
     {
-        Task<IReadOnlyList<TodosList>> GetTodosAsync();
+        Task<IEnumerable<TodosList>> GetTodosAsync();
 
         Task<IReadOnlyList<TodosList>> GetTodosByUserIdAsync(Guid id);
 
-        Task<TodosList> GetByIdAsync(Guid id);
+        Task<TodosList> GetByIdAsync(int id);
 
         Task<TodosList> CreateTodoAsync(TodosList todo);
 

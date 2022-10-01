@@ -15,8 +15,6 @@ namespace TodoListBlazorWasm.Components
         [Inject] private ITaskApiClient _taskApiClient { get; set; }
         [Inject] private NavigationManager _navigationManager { get; set; }
 
-        private TodoList TodoList { get; set; }
-
         private IReadOnlyList<TypeViewModel> Types;
 
         // tạo 1 model để binding data từ view xuống
@@ -33,9 +31,9 @@ namespace TodoListBlazorWasm.Components
 
             if (result != null)
             {
-                requestModel = new CreateNewTaskRequest(); 
-                _navigationManager.NavigateTo("/todolist/addNew");
-                Close();
+                requestModel = new CreateNewTaskRequest();
+                _navigationManager.NavigateTo(_navigationManager.Uri, forceLoad: true); // reload page
+                //Close();
             }
         }
 

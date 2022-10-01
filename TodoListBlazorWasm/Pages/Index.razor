@@ -1,7 +1,20 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+@inject NavigationManager _navigationManager
 
-Welcome to your new app.
+<h1>Hello everybody</h1>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<span>Welcome to my tasks management.</span>
+<div>
+    <button class="btn btn-outline-primary mt-3" @onclick="GoToTasks">
+        <span class="oi oi-arrow-right" aria-hidden="true"></span> Go to your tasks
+    </button>
+</div>
+
+@*<SurveyPrompt Title="How is Blazor working for you?" />*@
+@code{
+    private void GoToTasks()
+    {
+        _navigationManager.NavigateTo("/tasks");
+    }
+}

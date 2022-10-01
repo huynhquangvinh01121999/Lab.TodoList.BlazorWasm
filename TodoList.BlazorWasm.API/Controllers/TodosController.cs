@@ -1,11 +1,10 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using TodoList.BlazorWasm.Application.Features.Todos.Commands.CreateTodos;
+using TodoList.BlazorWasm.Application.Features.Todos.Commands.DeleteTodos;
+using TodoList.BlazorWasm.Application.Features.Todos.Commands.UpdateTodos;
 using TodoList.BlazorWasm.Application.Features.Todos.Queries.GetTodosByUserId;
 
 namespace TodoList.BlazorWasm.API.Controllers
@@ -43,6 +42,18 @@ namespace TodoList.BlazorWasm.API.Controllers
         public async Task<IActionResult> CreateTodos([FromBody] CreateTodosCommand request)
         {
             return Ok(await _mediator.Send(request));
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateTodos([FromBody] UpdateTodosCommand request)
+        {
+            return Ok(await _mediator.Send(request));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTodos(int id)
+        {
+            return Ok(await _mediator.Send(new DeleteTodosCommand { Id = id }));
         }
     }
 }

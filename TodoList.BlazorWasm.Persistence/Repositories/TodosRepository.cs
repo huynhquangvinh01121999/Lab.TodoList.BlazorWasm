@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TodoList.BlazorWasm.Domain.Entities;
 using TodoList.BlazorWasm.Domain.Interfaces;
@@ -13,7 +14,7 @@ namespace TodoList.BlazorWasm.Persistence.Repositories
     {
         private readonly AppDbContext _dbContext;
 
-        public TodosRepository(AppDbContext dbContext) : base (dbContext)
+        public TodosRepository(AppDbContext dbContext) : base(dbContext)
         {
             _dbContext = dbContext;
         }
@@ -40,18 +41,21 @@ namespace TodoList.BlazorWasm.Persistence.Repositories
             return result > 0 ? true : false;
         }
 
-        public async Task<TodosList> GetByIdAsync(Guid id)
+        public async Task<TodosList> GetByIdAsync(int id)
         {
-            var queryString = string.Format("select * from Lab.TodoLists where id = '{0}'", id);
-            var result = await _dbContext.TodoLists.FromSqlRaw(queryString).FirstOrDefaultAsync();
-            return result;
+            var result = from s in _dbContext.TodoLists
+                         where s.Id == id
+                         select s;
+            return await result.Include(x => x.Types).FirstOrDefaultAsync();
         }
 
-        public async Task<IReadOnlyList<TodosList>> GetTodosAsync()
+        public async Task<IEnumerable<TodosList>> GetTodosAsync()
         {
-            var queryString = "select * from Lab.TodoLists";
-            var results = await _dbContext.TodoLists.FromSqlRaw(queryString).ToListAsync();
-            return results;
+            var results = from s in _dbContext.TodoLists
+                          select s;
+            return await results
+                .Include(x => x.Types)
+                .OrderByDescending(s => s.CreatedAt).ToListAsync();
         }
 
         public async Task<IReadOnlyList<TodosList>> GetTodosByUserIdAsync(Guid id)

@@ -15,7 +15,10 @@ namespace TodoListBlazorWasm
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
 
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:44381") });
+            builder.Services.AddScoped(sp => new HttpClient 
+            { 
+                BaseAddress = new Uri(builder.Configuration["ApiUrl"]) 
+            });
 
             builder.Services.AddTransient<ITaskApiClient, TaskApiClient>();
             builder.Services.AddTransient<ITypeApiClient, TypeApiClient>();

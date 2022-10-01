@@ -27,11 +27,29 @@ namespace TodoListBlazorWasm.Services.TodoListServices
             return taskViewModel;
         }
 
+        public async Task<bool> DeleteTaskAsync(int id)
+        {
+            var response = await _httpClient.DeleteAsync($"/api/Todos/{id}");
+
+            var returnValue = await response.Content.ReadAsStringAsync();
+
+            return bool.Parse(returnValue);
+        }
+
         public async Task<TaskViewModel> GetTodoByIdAsync(int id) 
             => await _httpClient.GetFromJsonAsync<TaskViewModel>($"/api/Todos/{id}");
             
 
         public async Task<IReadOnlyList<TaskViewModel>> GetTodosAsync() 
             => await _httpClient.GetFromJsonAsync<IReadOnlyList<TaskViewModel>>("/api/Todos");
+
+        public async Task<bool> UpdateTaskAsync(UpdateTaskRequest request)
+        {
+            var response = await _httpClient.PutAsJsonAsync("/api/Todos", request);
+
+            var returnValue = await response.Content.ReadAsStringAsync();
+
+            return bool.Parse(returnValue);
+        }
     }
 }

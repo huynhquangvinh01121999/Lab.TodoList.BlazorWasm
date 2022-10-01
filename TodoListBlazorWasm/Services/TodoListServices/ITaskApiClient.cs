@@ -9,5 +9,7 @@ namespace TodoListBlazorWasm.Services.TodoListServices
         Task<IReadOnlyList<TaskViewModel>> GetTodosAsync();
         Task<TaskViewModel> GetTodoByIdAsync(int id);
         Task<TaskViewModel> CreateNewTaskAsync(CreateNewTaskRequest request);
+        Task<bool> UpdateTaskAsync(UpdateTaskRequest request);
+        Task<bool> DeleteTaskAsync(int id);
     }
 }
